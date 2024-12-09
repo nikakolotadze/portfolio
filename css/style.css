@@ -284,6 +284,7 @@ line-height: 1.8;
   color: white
 }
 input {
+  margin-left: 2%;
   background: transparent; 
   border: none;
   border-bottom: 1px solid white;
@@ -353,4 +354,7 @@ input::placeholder {
   color: #333;
   font-family:;
   font-weight: bold;
+}
+.clear{
+  margin-left: 65%;
 }
