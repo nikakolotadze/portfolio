@@ -1,12 +1,5 @@
-// <uniquifier>: Use a unique and descriptive class name
-// <weight>: Use a value from 200 to 700
 
-.oswald-<uniquifier> {
-  font-family: "Oswald", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: <weight>;
-  font-style: normal;
-}
+
 .roboto-thin {
     font-family: "Roboto", serif;
     font-weight: 100;
@@ -82,6 +75,7 @@
 
 
 .header-wraper{
+  z-index: 10;
     background-color: #333;
     padding: 30px 0;
     position: relative;
@@ -301,6 +295,9 @@ input::placeholder {
   color: rgba(255, 255, 255, 0.6); 
 }
 
+.geolab{
+  width: 30px;
+}
 
 
 
