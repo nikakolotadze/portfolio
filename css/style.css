@@ -305,12 +305,13 @@ input::placeholder {
 
 
 .projectsbio{
-  
-    display: flex;
-    margin: 60px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: #555;
+  padding: 20px;
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #333;
+  font-family:;
+  font-weight: bold;
 
 }.grid{
   display: grid;
@@ -318,6 +319,7 @@ input::placeholder {
   gap: 20px;
   max-width: 1200px;
   width: 90%;
+  margin: 20px;
 }
 .card{
   background-color: #e0e0e0;
@@ -351,5 +353,4 @@ input::placeholder {
   color: #333;
   font-family:;
   font-weight: bold;
-}
 }
