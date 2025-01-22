@@ -356,15 +356,22 @@ input::placeholder {
   margin-left: 65%;
 }
 
-
-
-
-
-
-
-footer img {
-  width: 80px;
-  height: auto;
-  margin-bottom: 10px;
+#music-therapy h2 {
+  font-family: 'Arial', sans-serif;
+  color: #34495e;
+  margin-bottom: 20px;
 }
 
+#music-therapy p {
+  color: #555;
+  font-size: 16px;
+}
+
+#music-therapy audio {
+  margin-top: 10px;
+}
+
+#music-therapy div:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
