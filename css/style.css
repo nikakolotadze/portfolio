@@ -190,7 +190,9 @@ ul{
       background-color:rgba(79, 79, 88, .97) ; 
   
   }
- 
+  .none{
+    display: none;
+  }
 
  
 }
@@ -374,4 +376,44 @@ input::placeholder {
 #music-therapy div:hover {
   transform: scale(1.05);
   transition: transform 0.3s ease;
+}
+
+footer {
+  background-color:gray;
+  color: #ecf0f1;
+  padding: 20px 10px;
+  text-align: center;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-logo img {
+  max-height: 50px;
+}
+
+.footer-info {
+  margin: 10px 0;
+}
+
+.footer-button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.footer-button:hover {
+  background-color: #2980b9;
 }
