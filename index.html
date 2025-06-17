@@ -81,6 +81,189 @@
         .hidden-content {
             display: none !important;
         }
+
+
+
+
+        html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden; /* მთლიან გვერდზე სქროლი არ იყოს */
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        /* background-color: #f0f0f0;  თქვენი ფონი */
+    }
+
+    .header-wraper {
+        height: 80px; /* ან თქვენი ჰედერის ზუსტი სიმაღლე */
+        flex-shrink: 0;
+        /* background-color: #f0f0f0; */
+        /* z-index-ის დაყენება საჭიროა, თუ რამე გადაფარავს */
+    }
+
+    footer {
+        height: 60px; /* ან თქვენი ფუტერის ზუსტი სიმაღლე */
+        flex-shrink: 0;
+        /* background-color: #333; */
+        /* color: white; */
+    }
+
+    /* მთავარი კონტენტისა და iframe-ის საერთო სტილები */
+    #main-index-content,
+    #site-content-frame {
+        width: 100%;
+        flex-grow: 1; /* იკავებს დარჩენილ სივრცეს */
+        box-sizing: border-box;
+        overflow-y: auto; /* მათი შიდა კონტენტი გადასქროლდება */
+        overflow-x: hidden; /* ჰორიზონტალური სქროლი არ იყოს */
+        transition: height 0.3s ease; /* სიმაღლის ცვლილების ანიმაცია */
+    }
+
+    #site-content-frame {
+        border: none;
+        background-color: transparent;
+        visibility: hidden; /* თავიდან დამალულია */
+        height: 0; /* **მნიშვნელოვანია:** თავიდან სიმაღლე 0-ია */
+    }
+
+    /* როდესაც Home გვერდის კონტენტი იმალება */
+    #main-index-content.hidden-content {
+        display: none !important;
+        height: 0 !important; /* უზრუნველყოფს, რომ არ დაიკავებს ადგილს */
+        overflow: hidden !important; /* სქროლიც მოიშორება */
+    }
+
+    /* მუსიკის პლეერის CSS */
+    #mini-audio-player {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 5px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        /* საწყისი ზომები დესკტოპისთვის */
+        width: 50px; /* დაკეცილი ზომა */
+        height: 40px;
+        overflow: hidden;
+        transition: width 0.3s ease; /* ანიმაცია ჰოვერზე გაშლისთვის */
+    }
+
+    /* გაშლილი ზომა ჰოვერზე (დესკტოპისთვის) */
+    #mini-audio-player:hover {
+        width: 180px;
+    }
+
+    #mini-audio-player audio {
+        display: none; /* აუდიო ელემენტი დამალულია */
+    }
+
+    .player-btn {
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 1.5em;
+        cursor: pointer;
+        padding: 0 5px;
+        outline: none;
+        transition: color 0.2s ease;
+        line-height: 1;
+    }
+
+    .player-btn:hover {
+        color: #1DB954;
+    }
+
+    .player-btn.playing {
+        font-size: 1.4em;
+    }
+
+    /* სიმღერის სათაური თავიდან იმალება და გაშლისას ჩნდება */
+    #mini-audio-player:hover .song-title {
+        opacity: 1;
+        width: auto;
+        margin-left: 10px;
+    }
+
+    .song-title {
+        color: #fff;
+        font-size: 0.9em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        opacity: 0;
+        width: 0;
+        transition: opacity 0.3s ease, width 0.3s ease;
+    }
+
+    /* --- MEDIA QUERIES for Responsiveness --- */
+
+    /* მცირე ეკრანებისთვის (მაგ. მობილური ტელეფონები) */
+    @media (max-width: 768px) {
+        #mini-audio-player {
+            /* პლეერი ქვედა ცენტრში */
+            left: 50%;
+            transform: translateX(-50%);
+            right: auto; /* გადაფარავს right-ს */
+            bottom: 10px;
+            width: 120px; /* მცირე ეკრანზე მუდმივად გაშლილი */
+            height: 40px;
+            padding: 5px 10px; /* მეტი padding */
+        }
+
+        #mini-audio-player:hover {
+            width: 120px; /* hover-ზეც იგივე სიგანე */
+        }
+
+        .song-title {
+            opacity: 1; /* სიმღერის სათაური ყოველთვის ჩანს */
+            width: auto;
+            margin-left: 10px;
+            flex-grow: 1; /* სათაურმა შეავსოს დარჩენილი სივრცე */
+            text-align: left; /* ტექსტი მარცხნივ */
+        }
+
+        .player-btn {
+            font-size: 1.3em; /* ღილაკის ზომა ოდნავ შემცირდა */
+            padding: 0; /* padding-ი მოვაშორე ღილაკს */
+        }
+    }
+
+    /* კიდევ უფრო მცირე ეკრანებისთვის (მაგ. ძველი მობილურები) */
+    @media (max-width: 480px) {
+        #mini-audio-player {
+            width: 100px; /* კიდევ უფრო შევამცირე სიგანე */
+            height: 35px; /* სიმაღლეც შევამცირე */
+            bottom: 5px; /* ოდნავ ქვემოთ */
+            padding: 5px;
+        }
+
+        #mini-audio-player:hover {
+            width: 100px;
+        }
+
+        .song-title {
+            font-size: 0.8em; /* შრიფტის ზომა შევამცირე */
+            margin-left: 5px;
+        }
+
+        .player-btn {
+            font-size: 1.2em;
+        }
+    }
+
+
+
+
+
+
     </style>
 </head>
 <body class="bck">
