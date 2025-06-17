@@ -2,61 +2,61 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="keywords" content="nikopisa, renaissance, nikaloforever">
-  <meta name="author" content="nikaloforever">
-    <meta name="store" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="nikopisa, renaissance, nikaloforever, store, clothes">
+    <meta name="author" content="nikaloforever">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>nikopsia</title>
-    <script src="https://kit.fontawesome.com/6de6aa5275.js" crossorigin="anonymous"></script>
+    <title>Amanita - Store</title>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="link rel="preconnect href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Oswald:wght@200..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Oswald:wght@200..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
+    <style>
+        body {
+            padding: 20px;
+            padding-bottom: 80px; /* დავამატეთ მეტი ქვედა padding-ი, რათა ფუტერი არ დაეჯახოს */
+            margin: 0; /* რათა არ იყოს ზედმეტი სივრცე */
+            box-sizing: border-box; /* padding ჩაითვლება სიგანეში/სიმაღლეში */
+            /* ეს ხაზები უნდა იყოს კომენტარში ან წაშლილი, რათა iframe-ის ავტომატურმა სიმაღლეზე მორგებამ იმუშაოს */
+            /* min-height: 100vh; */
+            /* display: flex; */
+            /* flex-direction: column; */
+            /* justify-content: space-between; */
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* რესპონსიული ბადე */
+            gap: 20px; /* მანძილი კარტებს შორის */
+            max-width: 1200px; /* მაქსიმალური სიგანე */
+            margin: 40px auto; /* ცენტრში განლაგება და ზედა/ქვედა მანძილი */
+            padding: 0 15px; /* გვერდითა ფადინგი მობილურზე */
+        }
+        .card {
+            background-color: #f0f0f0; /* ფონის ფერი კარტებისთვის */
+            border-radius: 8px; /* მომრგვალებული კუთხეები */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* ჩრდილი */
+            min-height: 200px; /* მინიმალური სიმაღლე კარტებისთვის (შეგიძლიათ შეცვალოთ) */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5em;
+            color: #555;
+            /* ეს მხოლოდ მაგალითისთვისაა, შეგიძლიათ აქ დაამატოთ თქვენი კონტენტი */
+            /* border: 1px solid #ddd; */
+        }
+        /* თუ style.css-ში გაქვთ ამ ელემენტების სტილები, მაშინ აქ არ არის საჭირო მათი გამეორება */
+    </style>
 </head>
 <body>
-    <header class="header-wraper">
-        <div class="wrapper">
-            <ul class="logo">
-                <a href="https://www.instagram.com/nikaloforever/">amanita</a>
-            </ul>
-            <ul id="menu" class="menu-ul">
-                <li><a class="nav-a" href="index.html">home</a></li>
-                <li><a class="nav-a" href="blog.html">blog</a></a></li>
-                <li><a class="nav-a" href="store.html">store</a></a></li>
-                <li><a class="nav-a" href="about.html">about</a></a></li>
-            </ul>
-            <ul id="socicon" class="social-icons">
-                <li><a href="https://www.facebook.com/ararusulmtavrobas/"><i class="fab fa-facebook-f"></i></a></li>
-                <li><a href="https://www.instagram.com/nikaloforever/"><i class="fab fa-instagram"></i></a></li>
-                <li><a href="https://www.youtube.com/@Nikaloforever"><i class="fab fa-youtube"></i></a></li>
-            </ul>
-            <div id="burger-menu" class="burger-icon">
-                <i class="fas fa-bars"></i>
-            </div>
-        </div>       
-</header>
+    <div class="grid">
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        </div>
 
-
-   <div class="grid">
-<div class="card"></div>
-<div class="card"></div>
-<div class="card"></div>
-<div class="card"></div>
-</div>
-<footer>
-    <div class="footer-container">
-     
-    <p class="none">&copy; 2025 ყველა უფლება დაცულია.</p>
-     <a href="">about me</a>
-     
-    </div>
-  </footer>
-
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="js/script.js"></script>
-</body>
+    </body>
 </html>

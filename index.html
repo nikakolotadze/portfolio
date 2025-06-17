@@ -3,82 +3,288 @@
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="nikusha kolotadze">
-  <meta name="keywords" content="nikopisa, renaissance, nikaloforever">
-  <meta name="author" content="nikaloforever">
+    <meta name="keywords" content="nikopisa, renaissance, nikaloforever">
+    <meta name="author" content="nikaloforever">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>amanita</title>
-    <!-- Fontawesome cdn link for burger icon -->
-
     <script src="https://kit.fontawesome.com/6de6aa5275.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Oswald:wght@200..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-<body class="bck">
-    <!-- header -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Oswald:wght@200..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* უზრუნველყოფს, რომ გვერდი ყოველთვის იკავებს ეკრანის მთელ სიმაღლეს */
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* ჰორიზონტალური სქროლი არ იყოს */
+            /* თუ გსურთ, რომ 'body' არასდროს არ გაასქროლოს, დაამატეთ overflow-y: hidden;,
+               მაგრამ ამ შემთხვევაში iframe-ში ჩატვირთულ კონტენტს ექნება საკუთარი სქროლი. */
+        }
+
+        /* iframe-ის სტილი - ის დაიკავებს ეკრანის დარჩენილ ადგილს Header-ის და Footer-ის ქვემოთ */
+        #site-content-frame {
+            width: 100%;
+            flex-grow: 1; /* იკავებს დარჩენილ სივრცეს */
+            border: none;
+            background-color: transparent; /* თუ გსურთ, რომ iframe-ის ფონი გამჭვირვალე იყოს */
+            /* შეგიძლიათ დაამატოთ padding, თუ გსურთ კონტენტი არ მიეკრას გვერდებს */
+            padding: 20px 0; /* მაგალითად, ზედა/ქვედა padding */
+            box-sizing: border-box; /* padding ჩაითვლება სიგანეში/სიმაღლეში */
+            display: block; /* დარწმუნდით, რომ ბლოკური ელემენტია */
+            visibility: hidden; /* თავიდან დამალულია, გამოჩნდება მხოლოდ გვერდის ჩატვირთვისას */
+            height: 0; /* თავიდან სიმაღლე 0-ია */
+        }
+
+        /* მუსიკის პლეერის CSS */
+        #mini-audio-player {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 5px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            width: 50px;
+            height: 40px;
+            overflow: hidden;
+            transition: width 0.3s ease;
+        }
+        #mini-audio-player:hover { width: 180px; }
+        #mini-audio-player audio { display: none; }
+        .player-btn {
+            background: none; border: none; color: #fff; font-size: 1.5em;
+            cursor: pointer; padding: 0 5px; outline: none; transition: color 0.2s ease; line-height: 1;
+        }
+        .player-btn:hover { color: #1DB954; }
+        .player-btn.playing { font-size: 1.4em; }
+        #mini-audio-player:hover .song-title { opacity: 1; width: auto; margin-left: 10px; }
+        .song-title {
+            color: #fff; font-size: 0.9em; white-space: nowrap; overflow: hidden;
+            text-overflow: ellipsis; opacity: 0; width: 0; transition: opacity 0.3s ease, width 0.3s ease;
+        }
+
+        /* სტილები index.html-ის ძირითადი კონტენტისთვის, როდესაც ის ხილულია */
+        .index-content {
+            flex-grow: 1; /* იკავებს დარჩენილ სივრცეს */
+            display: block; /* თავიდან ხილულია */
+        }
+
+        /* კლასი, რომელიც დაიმალება, როცა iframe-ში კონტენტი ჩაიტვირთება */
+        .hidden-content {
+            display: none !important;
+        }
+    </style>
+</head>
+<body class="bck">
     <header class="header-wraper">
-            <div class="wrapper">
-                <ul class="logo">
-                   
-                    <a href="https://www.instagram.com/nikaloforever/"> amanita </a>
-                </ul>
-                <ul id="menu" class="menu-ul">
-                    <li><a class="nav-a" href="index.html">Home</a></li>
-                    <li><a class="nav-a" href="blog.html">blog</a></a></li>
-                    <li><a class="nav-a" href="store.html">store</a></a></li>
-                    <li><a class="nav-a" href="about.html">about</a></a></li>
-                </ul>
-                <ul id="socicon" class="social-icons">
-                    <li><a href="https://www.facebook.com/ararusulmtavrobas/"><i class="fab fa-facebook-f"></i></a></li>
-                    <li><a href="https://www.instagram.com/nikaloforever/"><i class="fab fa-instagram"></i></a></li>
-                    <li><a href="https://www.youtube.com/@Nikaloforever"><i class="fab fa-youtube"></i></a></li>
-                </ul>
-                <div id="burger-menu" class="burger-icon">
-                    <i class="fas fa-bars"></i>
-                </div>
-            </div>       
-    </header>
-    <div class="bio-container">
-        <div class="bio-title">Amanita</div>
-       <div class="imgbio"> <img class="img" src="img/467330507_383251621449929_3106293847326971731_n.jpg" alt=""> <p class="bio"> i'm nikusha kolotadze; Tbilisi-based writer and co-founder of project renaissance and clotching brand nikopisa <br>
-            i'm born 2005 years 10 december . 
-               i have completed the GEOLAB front-end courses.
-            i'm from georgia and 20% of my country is occupied by russia
-            </p>
-           
+        <div class="wrapper">
+            <ul class="logo">
+                <a href="#" onclick="showIndexContent(); return false;"> amanita </a>
+            </ul>
+            <ul id="menu" class="menu-ul">
+                <li><a class="nav-a" href="#" onclick="showIndexContent(); return false;">Home</a></li>
+                <li><a class="nav-a" href="#" onclick="loadPage('blog.html'); return false;">blog</a></li>
+                <li><a class="nav-a" href="#" onclick="loadPage('store.html'); return false;">store</a></li>
+                <li><a class="nav-a" href="#" onclick="loadPage('about.html'); return false;">about</a></li>
+            </ul>
+            <ul id="socicon" class="social-icons">
+                <li><a href="https://www.facebook.com/ararusulmtavrobas/"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href="https://www.instagram.com/nikaloforever/"><i class="fab fa-instagram"></i></a></li>
+                <li><a href="https://www.youtube.com/@Nikaloforever"><i class="fab fa-youtube"></i></a></li>
+            </ul>
+            <div id="burger-menu" class="burger-icon">
+                <i class="fas fa-bars"></i>
+            </div>
         </div>
-      
-       </div>
-           
-      <p class="wussup">wussup</p>
-           <div class="gallery">
-            
+    </header>
+
+    <div id="main-index-content" class="index-content">
+        <div class="bio-container">
+            <div class="bio-title">Amanita</div>
+            <div class="imgbio">
+                <img class="img" src="img/467330507_383251621449929_3106293847326971731_n.jpg" alt="">
+                <p class="bio"> i'm nikusha kolotadze; Tbilisi-based writer and co-founder of project renaissance and clotching brand nikopisa <br>
+                    i'm born 2005 years 10 december .
+                    i have completed the GEOLAB front-end courses.
+                    i'm from georgia and 20% of my country is occupied by russia
+                </p>
+            </div>
+        </div>
+        <p class="wussup">wussup</p>
+        <div class="gallery">
             <img src="img/436660547_1112627143300193_5697132099219888869_n.jpg" alt="Photo 1">
             <img src="img/462578752_1084357963151040_7770467314483089949_n.jpg" alt="Photo 2">
             <img src="img/3..jpg" alt="photo 3">
-           <img src="img/462641846_1088048402625086_2941943949820715060_n.jpg" alt="Photo 4">
+            <img src="img/462641846_1088048402625086_2941943949820715060_n.jpg" alt="Photo 4">
             <img src="img/462650717_1252860015968219_4218695038134074054_n.jpg" alt="Photo 5">
             <img src="img/5.jpg" alt="photo 6">
             <img src="img/465142036_1143664403844930_2095292255882046350_n.jpg" alt="photo 7">
             <img src="img/465218453_8783165111791238_8494592821093695265_n.jpg" alt="photo 8">
             <img src="" alt="">
-          </div>
+        </div>
+    </div>
 
+    <iframe id="site-content-frame" src="about:blank"></iframe>
 
-          <footer>
-            <div class="footer-container">
-         
-            <p class="none">&copy; 2025 ყველა უფლება დაცულია.</p>
-             <a href="">about me</a>
-             
-            </div>
-          </footer>
-    <!-- Js Link -->
+   
+
+    <div id="mini-audio-player">
+        <audio id="myAudio" loop>
+            <source src="namco.mp3" type="audio/mpeg">
+            თქვენს ბრაუზერს არ აქვს აუდიოს მხარდაჭერა.
+        </audio>
+        <button id="togglePlayPause" class="player-btn">▶</button>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="js/script.js"></script>
+
+    <script>
+        const iframe = document.getElementById('site-content-frame');
+        const mainIndexContent = document.getElementById('main-index-content');
+        const myAudio = document.getElementById('myAudio');
+        const togglePlayPauseBtn = document.getElementById('togglePlayPause');
+        const miniAudioPlayer = document.getElementById('mini-audio-player');
+
+        // IFRAME-ის მართვის ფუნქცია
+        function loadPage(pageUrl) {
+            // დამალე index.html-ის კონტენტი
+            mainIndexContent.classList.add('hidden-content');
+            // გამოაჩინე iframe და მიანიჭე სიმაღლე
+            iframe.style.visibility = 'visible';
+            iframe.style.height = 'auto'; // ან 100% Header/Footer-ს გარდა
+            iframe.src = pageUrl;
+        }
+
+        // Home გვერდზე დაბრუნების ფუნქცია
+        function showIndexContent() {
+            // გამოაჩინე index.html-ის კონტენტი
+            mainIndexContent.classList.remove('hidden-content');
+            // დამალე iframe და გაასუფთავე მისი src
+            iframe.style.visibility = 'hidden';
+            iframe.style.height = '0';
+            iframe.src = 'about:blank'; // ასუფთავებს iframe-ს
+        }
+
+        // საიტის ჩატვირთვისას, თავიდან Home გვერდი გამოჩნდეს
+        window.onload = function() {
+            showIndexContent();
+        };
+
+        // *************************************************************
+        // ქვემოთ არის მუსიკის პლეერის JavaScript კოდი
+        // *************************************************************
+
+        const playlist = [
+            { title: "", src: "namco.mp3" }
+            // შეგიძლიათ დაამატოთ მეტი სიმღერა აქ:
+            // { title: "სიმღერა 2", src: "song2.mp3" },
+            // { title: "სიმღერა 3", src: "song3.mp3" }
+        ];
+        let currentSongIndex = 0;
+
+        let songTitleElement = miniAudioPlayer.querySelector('.song-title');
+        if (!songTitleElement) {
+            songTitleElement = document.createElement('span');
+            songTitleElement.className = 'song-title';
+            miniAudioPlayer.insertBefore(songTitleElement, togglePlayPauseBtn);
+        }
+
+        function loadSong(index) {
+            if (playlist.length === 0) {
+                console.warn("პლეილისტი ცარიელია. დაამატეთ მუსიკის ფაილები!");
+                songTitleElement.textContent = "არ არის მუსიკა";
+                togglePlayPauseBtn.disabled = true;
+                return;
+            }
+            myAudio.src = playlist[index].src;
+            songTitleElement.textContent = playlist[index].title;
+            myAudio.load();
+            togglePlayPauseBtn.disabled = false;
+        }
+
+        function playAudio() {
+            myAudio.play()
+                .then(() => {
+                    togglePlayPauseBtn.textContent = '❚❚';
+                    togglePlayPauseBtn.classList.add('playing');
+                    console.log("მუსიკა უკრავს");
+                })
+                .catch(error => {
+                    console.error("Audio playback failed:", error);
+                    // alert("მუსიკის დაკვრა ვერ მოხერხდა. ბრაუზერმა შესაძლოა დაბლოკა ავტომატური დაკვრა. გთხოვთ, ხელით დააჭირეთ დაკვრის ღილაკს.");
+                    togglePlayPauseBtn.textContent = '▶';
+                    togglePlayPauseBtn.classList.remove('playing');
+                });
+        }
+
+        function pauseAudio() {
+            myAudio.pause();
+            togglePlayPauseBtn.textContent = '▶';
+            togglePlayPauseBtn.classList.remove('playing');
+            console.log("მუსიკა დაპაუზებულია");
+        }
+
+        togglePlayPauseBtn.addEventListener('click', () => {
+            if (myAudio.paused) {
+                playAudio();
+            } else {
+                pauseAudio();
+            }
+        });
+
+        myAudio.addEventListener('ended', () => {
+            if (playlist.length > 1) {
+                currentSongIndex = (currentSongIndex + 1) % playlist.length;
+                loadSong(currentSongIndex);
+                playAudio();
+            } else {
+                pauseAudio(); // თუ მხოლოდ ერთი სიმღერაა, დაკვრის შემდეგ დაპაუზდება
+            }
+        });
+
+        // საწყისი სიმღერის ჩატვირთვა საიტის ჩატვირთვისას
+        loadSong(currentSongIndex);
+
+        // შეცდომების შემოწმება (debugging)
+        if (!myAudio) console.error("Error: Audio element with ID 'myAudio' not found!");
+        if (!togglePlayPauseBtn) console.error("Error: Button with ID 'togglePlayPause' not found!");
+        if (!miniAudioPlayer) console.error("Error: Div with ID 'mini-audio-player' not found!");
+
+        myAudio.addEventListener('loadedmetadata', () => {
+            console.log(`Audio metadata loaded for: ${myAudio.src}`);
+            console.log(`Duration: ${myAudio.duration} seconds`);
+        });
+
+        myAudio.addEventListener('error', (e) => {
+            console.error("Audio error:", e);
+            switch (e.target.error.code) {
+                case e.target.error.MEDIA_ERR_ABORTED:
+                    console.error('You aborted the audio playback.');
+                    break;
+                case e.target.error.MEDIA_ERR_NETWORK:
+                    console.error('A network error caused the audio download to fail.');
+                    break;
+                case e.target.error.MEDIA_ERR_DECODE:
+                    console.error('The audio playback was aborted due to a corruption problem or because the media uses features your browser does not support.');
+                    break;
+                case e.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
+                    console.error('The audio could not be loaded, either because the server or network failed or because the format is not supported.');
+                    break;
+                default:
+                    console.error('An unknown audio error occurred.');
+                    break;
+            }
+            alert("მუსიკის ჩატვირთვა ვერ მოხერხდა. შეამოწმეთ ფაილის გზა და ფორმატი.");
+        });
+    </script>
 </body>
 </html>
