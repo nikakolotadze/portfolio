@@ -287,6 +287,7 @@
                 <i class="fas fa-bars"></i>
             </div>
         </div>
+     
     </header>
 
     <div id="main-index-content" class="index-content">
@@ -312,6 +313,11 @@
             <img src="img/465142036_1143664403844930_2095292255882046350_n.jpg" alt="photo 7">
             <img src="img/465218453_8783165111791238_8494592821093695265_n.jpg" alt="photo 8">
         </div>
+        <footer class="mt-auto py-2 bg-dark text-white-50 text-center" id="main-footer">
+            <div class="container">
+                <small>&copy; 2025 Nikopsia. All rights reserved.</small>
+            </div>
+        </footer>
     </div>
 
     <iframe id="site-content-frame" src="about:blank"></iframe>
@@ -321,6 +327,7 @@
     <div id="mini-audio-player">
         <audio id="myAudio" loop>
             <source src="namco.mp3" type="audio/mpeg">
+           <source src="sevda universal.mp3" type="audio/mpeg">
             თქვენს ბრაუზერს არ აქვს აუდიოს მხარდაჭერა.
         </audio>
         <button id="togglePlayPause" class="player-btn">▶</button>
@@ -366,7 +373,8 @@
         // *************************************************************
 
         const playlist = [
-            { title: "", src: "namco.mp3" }
+            {  src: "namco.mp3" },
+             { title: "", src: "sevda universal.mp3" }
             // { title: "სიმღერა 2", src: "song2.mp3" },
             // { title: "სიმღერა 3", src: "song3.mp3" }
         ];
@@ -468,4 +476,5 @@
         });
     </script>
 </body>
+
 </html>
