@@ -322,48 +322,41 @@
 
     <iframe id="site-content-frame" src="about:blank"></iframe>
 
-   
-
     <div id="mini-audio-player">
-        <audio id="myAudio" loop>
-            <source src="namco.mp3" type="audio/mpeg">
-           <source src="sevda universal.mp3" type="audio/mpeg">
+        <audio id="myAudio">
             თქვენს ბრაუზერს არ აქვს აუდიოს მხარდაჭერა.
         </audio>
         <button id="togglePlayPause" class="player-btn">▶</button>
+        <span class="song-title"></span> 
     </div>
+   
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="js/script.js"></script>
-
     <script>
         const iframe = document.getElementById('site-content-frame');
         const mainIndexContent = document.getElementById('main-index-content');
         const myAudio = document.getElementById('myAudio');
         const togglePlayPauseBtn = document.getElementById('togglePlayPause');
         const miniAudioPlayer = document.getElementById('mini-audio-player');
+        let songTitleElement = miniAudioPlayer.querySelector('.song-title');
 
         // IFRAME-ის მართვის ფუნქცია
         function loadPage(pageUrl) {
-            // დამალე index.html-ის კონტენტი
             mainIndexContent.classList.add('hidden-content');
-            // გამოაჩინე iframe და მიანიჭე სიმაღლე
             iframe.style.visibility = 'visible';
-            iframe.style.height = 'auto'; // ან 100% Header/Footer-ს გარდა
+            iframe.style.height = '100vh';
             iframe.src = pageUrl;
         }
 
         // Home გვერდზე დაბრუნების ფუნქცია
         function showIndexContent() {
-            // გამოაჩინე index.html-ის კონტენტი
             mainIndexContent.classList.remove('hidden-content');
-            // დამალე iframe და გაასუფთავე მისი src
             iframe.style.visibility = 'hidden';
             iframe.style.height = '0';
-            iframe.src = 'about:blank'; // ასუფთავებს iframe-ს
+            iframe.src = 'about:blank';
         }
 
-        // საიტის ჩატვირთვისას, თავიდან Home გვერდი გამოჩნდეს
         window.onload = function() {
             showIndexContent();
         };
@@ -374,17 +367,16 @@
 
         const playlist = [
             {  src: "namco.mp3" },
-             { title: "", src: "sevda universal.mp3" }
-            // { title: "სიმღერა 2", src: "song2.mp3" },
-            // { title: "სიმღერა 3", src: "song3.mp3" }
+            { src: "sevda universal.mp3" },
+            { src: "Max.95 - Tetnuldi.mp3" }, 
+          
         ];
         let currentSongIndex = 0;
 
-        let songTitleElement = miniAudioPlayer.querySelector('.song-title');
         if (!songTitleElement) {
             songTitleElement = document.createElement('span');
             songTitleElement.className = 'song-title';
-            miniAudioPlayer.insertBefore(songTitleElement, togglePlayPauseBtn);
+            miniAudioPlayer.insertBefore(songTitleElement, togglePlayPauseBtn.nextSibling);
         }
 
         function loadSong(index) {
@@ -409,7 +401,6 @@
                 })
                 .catch(error => {
                     console.error("Audio playback failed:", error);
-                    // alert("მუსიკის დაკვრა ვერ მოხერხდა. ბრაუზერმა შესაძლოა დაბლოკა ავტომატური დაკვრა. გთხოვთ, ხელით დააჭირეთ დაკვრის ღილაკს.");
                     togglePlayPauseBtn.textContent = '▶';
                     togglePlayPauseBtn.classList.remove('playing');
                 });
@@ -422,6 +413,13 @@
             console.log("მუსიკა დაპაუზებულია");
         }
 
+        // სიმღერის ავტომატური გადართვა
+        myAudio.addEventListener('ended', () => {
+            currentSongIndex = (currentSongIndex + 1) % playlist.length; // გადადის შემდეგ სიმღერაზე, ბოლოსკენ კი თავიდან
+            loadSong(currentSongIndex);
+            playAudio(); // ახალი სიმღერის დაკვრა
+        });
+
         togglePlayPauseBtn.addEventListener('click', () => {
             if (myAudio.paused) {
                 playAudio();
@@ -430,17 +428,6 @@
             }
         });
 
-        myAudio.addEventListener('ended', () => {
-            if (playlist.length > 1) {
-                currentSongIndex = (currentSongIndex + 1) % playlist.length;
-                loadSong(currentSongIndex);
-                playAudio();
-            } else {
-                pauseAudio(); // თუ მხოლოდ ერთი სიმღერაა, დაკვრის შემდეგ დაპაუზდება
-            }
-        });
-
-        // საწყისი სიმღერის ჩატვირთვა საიტის ჩატვირთვისას
         loadSong(currentSongIndex);
 
         // შეცდომების შემოწმება (debugging)
